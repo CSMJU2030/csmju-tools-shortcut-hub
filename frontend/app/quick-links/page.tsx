@@ -58,26 +58,26 @@ export default function QuickLinksPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#334155] py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-background text-on-surface py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1280px] mx-auto space-y-8">
         
         {/* Header ส่วนหัวระบบ */}
-        <header className="bg-gradient-to-r from-[#004C99] to-[#003366] text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+        <header className="brand-gradient text-on-primary rounded-[12px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
           <div className="relative z-10 max-w-2xl">
-            <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md text-xs font-medium rounded-full mb-3 text-[#E6F2FF]">
+            <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm text-label-sm rounded-full mb-3 text-primary-fixed">
               CSMJU 2030 Directory Portal
             </span>
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2">
+            <h1 className="text-headline-md sm:text-headline-lg font-display mb-2">
               CS Quick-Link Hub
             </h1>
-            <p className="text-sm sm:text-base text-[#E6F2FF] opacity-90 leading-relaxed">
+            <p className="text-body-sm sm:text-body-md text-primary-fixed opacity-90 leading-relaxed">
               ศูนย์รวมทางลัดระบบ เว็บไซต์ และเครื่องมือสำคัญประจำสาขาวิทยาการคอมพิวเตอร์
             </p>
           </div>
         </header>
 
         {/* ค้นหาและตัวกรอง */}
-        <section className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <section className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
           <SearchBar value={searchKeyword} onChange={setSearchKeyword} />
           <CategoryFilter
             selectedCategory={selectedCategory}
@@ -91,8 +91,8 @@ export default function QuickLinksPage() {
         {pinnedLinks.length > 0 && searchKeyword === '' && selectedCategory === 'ALL' && (
           <section className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-amber-500 text-lg">★</span>
-              <h2 className="text-lg font-bold text-slate-800">ลิงก์ปักหมุดประจำสาขา</h2>
+              <span className="text-brand-amber text-lg">★</span>
+              <h2 className="text-headline-md text-on-surface">ลิงก์ปักหมุดประจำสาขา</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {pinnedLinks.map((link) => (
@@ -110,12 +110,12 @@ export default function QuickLinksPage() {
         {/* รายการลิงก์ทั้งหมด */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-800">
+            <h2 className="text-headline-md text-on-surface">
               {searchKeyword || selectedCategory !== 'ALL' || selectedYear !== 'ALL'
                 ? `ผลการค้นหา (${links.length} รายการ)`
                 : 'รายการลิงก์ทั้งหมด'}
             </h2>
-            {isPending && <span className="text-xs text-[#004C99] animate-pulse">กำลังโหลด...</span>}
+            {isPending && <span className="text-label-sm text-primary-container animate-pulse">กำลังโหลด...</span>}
           </div>
 
           {links.length > 0 ? (
@@ -131,10 +131,10 @@ export default function QuickLinksPage() {
             </div>
           ) : (
             /* Empty State */
-            <div className="bg-white border border-dashed border-slate-300 rounded-2xl p-12 text-center space-y-3">
+            <div className="bg-surface-container-lowest border border-dashed border-outline-variant/40 rounded-xl p-12 text-center space-y-3">
               <div className="text-4xl">🔍</div>
-              <h3 className="text-base font-bold text-slate-700">ไม่พบลิงก์ที่คุณกำลังค้นหา</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+              <h3 className="text-body-md font-bold text-on-surface-variant">ไม่พบลิงก์ที่คุณกำลังค้นหา</h3>
+              <p className="text-caption text-secondary max-w-sm mx-auto">
                 ลองเปลี่ยนคำค้นหา หรือรีเซ็ตตัวกรองหมวดหมู่และชั้นปีใหม่อีกครั้ง
               </p>
               <button
@@ -143,7 +143,7 @@ export default function QuickLinksPage() {
                   setSelectedCategory('ALL');
                   setSelectedYear('ALL');
                 }}
-                className="mt-2 px-4 py-2 bg-[#E6F2FF] text-[#004C99] text-xs font-semibold rounded-lg hover:bg-[#004C99] hover:text-white transition-colors"
+                className="mt-2 px-4 py-2 bg-primary-container/10 text-primary-container text-label-md rounded-lg hover:bg-primary-container hover:text-on-primary transition-colors"
               >
                 ล้างคำค้นหาทั้งหมด
               </button>

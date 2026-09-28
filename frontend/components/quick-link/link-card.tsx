@@ -24,16 +24,16 @@ export function LinkCard({ link, isBookmarked = false, onToggleBookmark }: LinkC
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-5 hover:shadow-lg transition-all duration-300 flex flex-col justify-between relative group hover:border-[#004C99]/30">
+    <div className="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-5 hover:shadow-md transition-all duration-300 flex flex-col justify-between relative group hover:border-primary-container/40">
       {/* Header ของ Card: หมวดหมู่ + ปุ่ม Bookmark */}
       <div>
         <div className="flex justify-between items-start mb-3 gap-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="px-2.5 py-1 bg-[#E6F2FF] text-[#004C99] text-xs font-semibold rounded-md">
+            <span className="px-2.5 py-1 bg-primary-container/10 text-primary-container text-label-sm rounded-md">
               {CATEGORY_LABELS[link.category] || link.category}
             </span>
             {link.isPinned && (
-              <span className="px-2.5 py-1 bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold rounded-md flex items-center gap-1">
+              <span className="px-2.5 py-1 bg-amber-100 text-amber-800 border border-amber-300 text-label-sm rounded-md flex items-center gap-1">
                 ★ ปักหมุดสาขา
               </span>
             )}
@@ -43,10 +43,10 @@ export function LinkCard({ link, isBookmarked = false, onToggleBookmark }: LinkC
             <button
               onClick={() => onToggleBookmark(link.id)}
               aria-label={isBookmarked ? 'ยกเลิกการปักหมุดส่วนตัว' : 'ปักหมุดส่วนตัว'}
-              className="text-slate-300 hover:text-amber-400 transition-colors p-1"
+              className="text-outline-variant hover:text-brand-amber transition-colors p-1"
             >
               <svg
-                className={`w-5 h-5 ${isBookmarked ? 'text-amber-400 fill-amber-400' : 'fill-none'}`}
+                className={`w-5 h-5 ${isBookmarked ? 'text-brand-amber fill-brand-amber' : 'fill-none'}`}
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -62,10 +62,10 @@ export function LinkCard({ link, isBookmarked = false, onToggleBookmark }: LinkC
         </div>
 
         {/* ชื่อลิงก์และคำอธิบาย */}
-        <h3 className="text-base font-bold text-slate-800 group-hover:text-[#004C99] transition-colors mb-2 line-clamp-1">
+        <h3 className="text-body-lg font-bold text-on-surface group-hover:text-primary-container transition-colors mb-2 line-clamp-1">
           {link.title}
         </h3>
-        <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+        <p className="text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed mb-4">
           {link.description}
         </p>
       </div>
@@ -74,14 +74,14 @@ export function LinkCard({ link, isBookmarked = false, onToggleBookmark }: LinkC
       <div>
         <div className="flex flex-wrap gap-1 mb-4">
           {link.tags.slice(0, 3).map((tag, idx) => (
-            <span key={idx} className="text-[11px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+            <span key={idx} className="text-caption text-secondary bg-surface-container px-2 py-0.5 rounded">
               #{tag}
             </span>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-          <span className="text-[11px] text-slate-400">
+        <div className="flex items-center justify-between pt-3 border-t border-surface-variant">
+          <span className="text-caption text-outline">
             ใช้งานแล้ว {link.clickCount.toLocaleString()} ครั้ง
           </span>
           <a
@@ -89,7 +89,7 @@ export function LinkCard({ link, isBookmarked = false, onToggleBookmark }: LinkC
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleClickLink}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#004C99] hover:underline"
+            className="inline-flex items-center gap-1.5 text-label-sm font-semibold text-primary-container hover:underline"
           >
             <span>ไปยังเว็บไซต์</span>
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
