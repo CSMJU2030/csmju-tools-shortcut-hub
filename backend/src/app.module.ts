@@ -8,11 +8,9 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import configuration from './config/configuration';
 import { validateEnv } from './config/env.validation';
-import { CoursesModule } from './courses/courses.module';
-import { EnrollmentsModule } from './enrollments/enrollments.module';
 import { HealthModule } from './health/health.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { StudentsModule } from './students/students.module';
+import { QuickLinksModule } from './quick-links/quick-links.module';
 
 @Module({
   imports: [
@@ -24,9 +22,7 @@ import { StudentsModule } from './students/students.module';
     PrismaModule,
     AuthModule,
     HealthModule,
-    StudentsModule,
-    CoursesModule,
-    EnrollmentsModule,
+    QuickLinksModule,
   ],
   providers: [
     // Every route is authenticated unless explicitly marked @Public().

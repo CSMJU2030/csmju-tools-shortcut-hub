@@ -1,77 +1,66 @@
 'use server';
 
-import { INITIAL_QUICK_LINKS } from '@/data/mock-quick-links';
-import { QuickLink, LinkFilterQuery, LinkCategory, TargetYear } from '@/types/quick-link.type';
+import { QuickLink, LinkFilterQuery } from '@/types/quick-link.type';
 
-// จำลองการเก็บ Data ใน Memory สำหรับ Mock (เมื่อเปลี่ยนเป็น DB จะเปลี่ยนเป็น Prisma Query)
-let mockLinksStore: QuickLink[] = [...INITIAL_QUICK_LINKS];
+// Base URL for the NestJS backend
+const API_URL = process.env.API_URL || 'http://localhost:3002/api';
 
-/**
- * ดึงรายการลิงก์ทั้งหมด พร้อมค้นหาและกรอง (Filter & Search)
- */
 export async function getQuickLinks(query?: LinkFilterQuery): Promise<QuickLink[]> {
-  let result = [...mockLinksStore];
+  try {
+    const params = new URLSearchParams();
+    if (query?.keyword) params.append('keyword', query.keyword);
+    if (query?.category && query.category !== 'ALL') params.append('category', query.category);
+    if (query?.targetYear && query.targetYear !== 'ALL') params.append('targetYear', query.targetYear);
 
-  if (!query) {
-    return result;
-  }
-
-  const { keyword, category, targetYear } = query;
-
-  // 1. กรองตาม Keyword (ค้นหาในชื่อ, คำอธิบาย และ Tags)
-  if (keyword && keyword.trim() !== '') {
-    const cleanKeyword = keyword.trim().toLowerCase();
-    result = result.filter((link) => {
-      const matchTitle = link.title.toLowerCase().includes(cleanKeyword);
-      const matchDesc = link.description.toLowerCase().includes(cleanKeyword);
-      const matchTags = link.tags.some((tag) => tag.toLowerCase().includes(cleanKeyword));
-      return matchTitle || matchDesc || matchTags;
+    const res = await fetch(`${API_URL}/quick-links?${params.toString()}`, {
+      cache: 'no-store', // Always fetch fresh data
     });
-  }
 
-  // 2. กรองตามหมวดหมู่ (Category)
-  if (category && category !== 'ALL') {
-    result = result.filter((link) => link.category === category);
-  }
+    if (!res.ok) {
+      throw new Error(`Failed to fetch quick links: ${res.status}`);
+    }
 
-  // 3. กรองตามกลุ่มชั้นปี (Target Year)
-  if (targetYear && targetYear !== 'ALL') {
-    result = result.filter(
-      (link) => link.targetYears.includes('ALL') || link.targetYears.includes(targetYear)
-    );
+    const { success, data } = await res.json();
+    return success ? data : [];
+  } catch (error) {
+    console.error('Error fetching quick links:', error);
+    return [];
   }
-
-  return result;
 }
 
-/**
- * ดึงเฉพาะลิงก์ที่ถูกปักหมุดประจำสาขา (Pinned Links)
- */
 export async function getPinnedQuickLinks(): Promise<QuickLink[]> {
-  return mockLinksStore.filter((link) => link.isPinned);
-}
+  try {
+    const res = await fetch(`${API_URL}/quick-links`, {
+      cache: 'no-store',
+    });
 
-/**
- * ดึงลิงก์ยอดนิยม (Top Clicked Links) เรียงตามจำนวนการคลิกมากไปน้อย
- */
-export async function getTopClickedQuickLinks(limit: number = 5): Promise<QuickLink[]> {
-  return [...mockLinksStore]
-    .sort((a, b) => b.clickCount - a.clickCount)
-    .slice(0, limit);
-}
+    if (!res.ok) {
+      throw new Error(`Failed to fetch pinned links: ${res.status}`);
+    }
 
-/**
- * บันทึกการกดคลิกใช้งานลิงก์ (Increment Click Count)
- */
-export async function trackLinkClick(linkId: string): Promise<{ success: boolean }> {
-  const linkIndex = mockLinksStore.findIndex((l) => l.id === linkId);
-  if (linkIndex !== -1) {
-    mockLinksStore[linkIndex] = {
-      ...mockLinksStore[linkIndex],
-      clickCount: mockLinksStore[linkIndex].clickCount + 1,
-      updatedAt: new Date().toISOString(),
-    };
-    return { success: true };
+    const { success, data } = await res.json();
+    return success ? data.filter((link: QuickLink) => link.isPinned) : [];
+  } catch (error) {
+    console.error('Error fetching pinned quick links:', error);
+    return [];
   }
-  return { success: false };
+}
+
+export async function trackLinkClick(linkId: string): Promise<{ success: boolean }> {
+  try {
+    const res = await fetch(`${API_URL}/quick-links/${linkId}/click`, {
+      method: 'POST',
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      return { success: false };
+    }
+
+    const json = await res.json();
+    return { success: json.success };
+  } catch (error) {
+    console.error('Error tracking link click:', error);
+    return { success: false };
+  }
 }
