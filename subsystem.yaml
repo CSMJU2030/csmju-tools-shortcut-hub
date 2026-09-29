@@ -15,17 +15,19 @@ public_endpoints:
 
 # conformance ใช้ probes ตรวจสัญญา API — ประกาศไม่ครบ = ขึ้น SKIP = ยังไม่ผ่าน
 probes:
-  collection: /api/v1/<resources>
-  not_found: /api/v1/<resources>/99999999-9999-4999-8999-999999999999
-  invalid_id: /api/v1/<resources>/not-a-uuid
+  collection: /api/v1/quick-links
+  not_found: /api/v1/quick-links/99999999-9999-4999-8999-999999999999
+  invalid_id: /api/v1/quick-links/not-a-uuid
   create:
-    path: /api/v1/<resources>
+    path: /api/v1/quick-links
     allowed_role: staff
     denied_role: student
     invalid_body:
-      someRequiredField: ""
+      title: ""
+      url: "invalid-url"
     valid_body:
-      someRequiredField: value
+      title: "Google"
+      url: "https://google.com"
 
 owners:
   pl: "@csmju2030/pl-tools-shortcut-hub"

@@ -3,7 +3,7 @@
 import { QuickLink, LinkFilterQuery } from '@/types/quick-link.type';
 
 // Base URL for the NestJS backend
-const API_URL = process.env.API_URL || 'http://localhost:3002/api';
+const API_URL = process.env.API_URL || 'http://localhost:3002/api/v1';
 
 export async function getQuickLinks(query?: LinkFilterQuery): Promise<QuickLink[]> {
   try {
@@ -24,7 +24,7 @@ export async function getQuickLinks(query?: LinkFilterQuery): Promise<QuickLink[
     return success ? data : [];
   } catch (error) {
     console.error('Error fetching quick links:', error);
-    return [];
+    throw new Error('Failed to fetch quick links');
   }
 }
 
@@ -42,7 +42,7 @@ export async function getPinnedQuickLinks(): Promise<QuickLink[]> {
     return success ? data.filter((link: QuickLink) => link.isPinned) : [];
   } catch (error) {
     console.error('Error fetching pinned quick links:', error);
-    return [];
+    throw new Error('Failed to fetch pinned links');
   }
 }
 

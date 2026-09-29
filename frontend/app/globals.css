@@ -1,38 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-container: #2154d9;
-  --color-primary: #003cb4;
-  --color-primary-fixed: #dce1ff;
-  --color-on-primary-container: #d2daff;
-  --color-on-primary: #ffffff;
-  --color-secondary: #4e5d87;
+  --color-primary-container: var(--csmju-color-primary-container, #2154d9);
+  --color-primary: var(--csmju-color-primary, #004c99);
+  --color-primary-fixed: var(--csmju-color-primary-fixed, #dce1ff);
+  --color-on-primary-container: var(--csmju-color-on-primary-container, #d2daff);
+  --color-on-primary: var(--csmju-color-on-primary, #ffffff);
+  --color-secondary: var(--csmju-color-secondary, #4e5d87);
   
-  --color-accent: #3b80f2;
-  --color-brand-navy: #16264d;
-  --color-brand-blue: #0d4fa8;
-  --color-brand-amber: #f59e0b;
+  --color-accent: var(--csmju-color-accent, #3b80f2);
+  --color-brand-navy: var(--csmju-color-brand-navy, #16264d);
+  --color-brand-blue: var(--csmju-color-brand-blue, #0d4fa8);
+  --color-brand-amber: var(--csmju-color-brand-amber, #f59e0b);
   
-  --color-background: #f8f9fa;
-  --color-surface: #f8f9fa;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f3f4f5;
-  --color-surface-container: #edeeef;
-  --color-surface-variant: #e1e3e4;
+  --color-background: var(--csmju-color-background, #f8f9fa);
+  --color-surface: var(--csmju-color-surface, #f8f9fa);
+  --color-surface-container-lowest: var(--csmju-color-surface-container-lowest, #ffffff);
+  --color-surface-container-low: var(--csmju-color-surface-container-low, #f3f4f5);
+  --color-surface-container: var(--csmju-color-surface-container, #edeeef);
+  --color-surface-variant: var(--csmju-color-surface-variant, #e1e3e4);
   
-  --color-on-surface: #191c1d;
-  --color-on-surface-variant: #434654;
+  --color-on-surface: var(--csmju-color-on-surface, #191c1d);
+  --color-on-surface-variant: var(--csmju-color-on-surface-variant, #434654);
   
-  --color-outline-variant: #c4c5d7;
-  --color-outline: #747686;
+  --color-outline-variant: var(--csmju-color-outline-variant, #c4c5d7);
+  --color-outline: var(--csmju-color-outline, #747686);
   
-  --color-success: #10b981;
-  --color-error: #ba1a1a;
-  --color-error-container: #ffdad6;
-  --color-on-error-container: #93000a;
+  --color-success: var(--csmju-color-success, #10b981);
+  --color-error: var(--csmju-color-error, #ba1a1a);
+  --color-error-container: var(--csmju-color-error-container, #ffdad6);
+  --color-on-error-container: var(--csmju-color-on-error-container, #93000a);
 
-  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "IBM Plex Sans Thai", system-ui, sans-serif;
+  --font-body: "Inter", "IBM Plex Sans Thai", system-ui, sans-serif;
 }
 
 body {

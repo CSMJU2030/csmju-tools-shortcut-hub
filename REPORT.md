@@ -1,9 +1,9 @@
-# รายงานผลการต่อระบบเข้ากับ Core Hub (LOCAL_INTEGRATION_GUIDE ข้อ 7)
+# รายงานผลการต่อระบบเข้ากับ Core Hub และ L2 API Conformance
 
 ## 1. ผลการรัน `./standards/scripts/run-all-checks.sh .`
 ตรวจสอบ Code Quality, ลายเซ็น API, ความปลอดภัย, และ Data Dictionary
 
-\`\`\`
+```
 ==================================================================
  Summary
 ==================================================================
@@ -27,12 +27,12 @@
   ✅ PASS  Exception Validation        check-exceptions.sh
 
 ✅ All 18 checks passed.
-\`\`\`
+```
 
 ## 2. ผลการรัน `node standards/conformance/run.js`
-ผลการตรวจสอบสัญญากับ Core Hub (L1 และ L3 ผ่านเรียบร้อยแล้ว, L2 เป็นส่วนของ API ที่จะทำใน PR 🟠 ถัดไปตามที่ตกลง)
+ผลการตรวจสอบสัญญากับ Core Hub (L1, L2, L3 ผ่านเรียบร้อยแล้ว)
 
-\`\`\`
+```
 manifest      : D:\cslink352\subsystem.yaml
 CSMJU2030 Subsystem Conformance Runner
 standard      : v1.0
@@ -82,13 +82,34 @@ tokens        : admin, student, staff, alumni
   PASS  L1-28.alumni core role "alumni" is mapped (200) or explicitly refused (403)
   PASS  L1-30      error responses do not leak stack traces or internals
 
+── L2 · Contract — collection shape & pagination
+  PASS  L2-01      GET /api/v1/quick-links → 200
+  PASS  L2-02      collection returns data as an array
+  PASS  L2-03      collection returns meta{total,page,limit,totalPages}
+  PASS  L2-04      pagination honours ?page=1&limit=1
+  PASS  L2-05      invalid query parameter → 400
+  PASS  L2-06      invalid query uses VALIDATION_ERROR
+
+── L2 · Contract — 404 / 400 / 403
+  PASS  L2-07      unknown resource id → 404
+  PASS  L2-08      404 uses NOT_FOUND
+  PASS  L2-09      malformed resource id → 400
+  PASS  L2-10      invalid request body → 400
+  PASS  L2-11      invalid body uses VALIDATION_ERROR
+  PASS  L2-12      role "student" cannot write → 403
+  PASS  L2-13      denied write uses FORBIDDEN
+
+── L2 · Contract — error codes come from the closed enum
+  PASS  L2-14      unknown route → 404 with an error envelope
+  PASS  L2-15      every returned error code is part of the standard enum
+
 ── L3 · SSO — registration & handoff
   PASS  L3-01      subsystem is registered in the Subsystem Registry
   PASS  L3-02      registry approvalStatus is APPROVED
   PASS  L3-03      registry status is ACTIVE
   PASS  L3-04      registered callback_url matches the running subsystem
   FAIL  L3-05      registry declares the core roles this subsystem accepts
-            → defaultRoleMapping is empty - Core Hub cannot filter who may enter (จะเพิ่ม config ส่วนนี้ในขั้นตอน DevOps)
+            → defaultRoleMapping is empty - Core Hub cannot filter who may enter (จะเพิ่ม config ส่วนนี้ในขั้นตอน DevOps หรือแก้ไขโดย DevOps)
   PASS  L3-06      Core Hub SSO authorize → 302
   PASS  L3-07      redirect points at the registered callback
 
@@ -103,7 +124,10 @@ tokens        : admin, student, staff, alumni
   PASS  L3-13      no session cookie is issued for a rejected token
   PASS  L3-14      callback without a token → 400 or 401
   PASS  L3-15      Core Hub rejects an unregistered callback_url
-\`\`\`
+
+────────────────────────────────────────────────────────────
+RESULT: 61 passed · 1 failed · 0 skipped
+```
 
 ## 3. ผลทดสอบ T1–T9
 - [x] T1: หน้าแรกสามารถแสดงผลได้ตามปกติ

@@ -49,16 +49,16 @@ export default function QuickLinksPage() {
 
   return (
     <div className="min-h-screen bg-background text-on-surface py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[1280px] mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Header ส่วนหัวระบบ */}
-        <header className="brand-gradient text-on-primary rounded-[12px] p-6 sm:p-10 shadow-xl relative overflow-hidden">
+        <header className="brand-gradient text-on-primary rounded-xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
           <div className="relative z-10 max-w-2xl">
             <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm text-label-sm rounded-full mb-3 text-primary-fixed">
               CSMJU 2030 Directory Portal
             </span>
-            <h1 className="text-headline-md sm:text-headline-lg font-display mb-2">
-              CS Quick-Link Hub
+            <h1 className="text-3xl sm:text-4xl font-display mb-2">
+              รวมเครื่องมือภาควิชาฯ
             </h1>
             <p className="text-body-sm sm:text-body-md text-primary-fixed opacity-90 leading-relaxed">
               ศูนย์รวมทางลัดระบบ เว็บไซต์ และเครื่องมือสำคัญประจำสาขาวิทยาการคอมพิวเตอร์
@@ -81,8 +81,10 @@ export default function QuickLinksPage() {
         {pinnedLinks.length > 0 && searchKeyword === '' && selectedCategory === 'ALL' && (
           <section className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-brand-amber text-lg">★</span>
-              <h2 className="text-headline-md text-on-surface">ลิงก์ปักหมุดประจำสาขา</h2>
+              <svg className="w-5 h-5 text-brand-amber" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <h2 className="text-xl font-bold text-on-surface">ลิงก์ปักหมุดประจำสาขา</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {pinnedLinks.map((link) => (
@@ -122,7 +124,9 @@ export default function QuickLinksPage() {
           ) : (
             /* Empty State */
             <div className="bg-surface-container-lowest border border-dashed border-outline-variant/40 rounded-xl p-12 text-center space-y-3">
-              <div className="text-4xl">🔍</div>
+              <svg className="w-12 h-12 mx-auto text-outline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
               <h3 className="text-body-md font-bold text-on-surface-variant">ไม่พบลิงก์ที่คุณกำลังค้นหา</h3>
               <p className="text-caption text-secondary max-w-sm mx-auto">
                 ลองเปลี่ยนคำค้นหา หรือรีเซ็ตตัวกรองหมวดหมู่และชั้นปีใหม่อีกครั้ง

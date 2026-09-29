@@ -2,9 +2,7 @@ import { SubsystemRole } from './core-hub-identity';
 
 export enum Permission {
   QUICK_LINK_READ_ANY = 'quick-link:read:any',
-  QUICK_LINK_CREATE = 'quick-link:create',
-  QUICK_LINK_UPDATE = 'quick-link:update',
-  QUICK_LINK_DELETE = 'quick-link:delete',
+  QUICK_LINK_MANAGE = 'quick-link:manage',
 }
 
 const STUDENT_PERMISSIONS: Permission[] = [
@@ -17,9 +15,7 @@ const ALUMNI_PERMISSIONS: Permission[] = [
 
 const STAFF_PERMISSIONS: Permission[] = [
   Permission.QUICK_LINK_READ_ANY,
-  Permission.QUICK_LINK_CREATE,
-  Permission.QUICK_LINK_UPDATE,
-  Permission.QUICK_LINK_DELETE,
+  Permission.QUICK_LINK_MANAGE,
 ];
 
 const ADMIN_PERMISSIONS: Permission[] = Object.values(Permission);
