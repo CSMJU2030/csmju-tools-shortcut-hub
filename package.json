@@ -7,7 +7,7 @@
     "build": "pnpm --filter backend build",
     "start:dev": "pnpm --filter backend start:dev",
     "dev": "pnpm --filter frontend dev",
-    "dev:all": "pnpm --parallel dev start:dev",
+    "dev:all": "pnpm --parallel -r dev",
     "test": "pnpm --filter backend test",
     "test:e2e": "pnpm --filter backend test:e2e",
     "test:integration": "pnpm --filter backend test:integration",

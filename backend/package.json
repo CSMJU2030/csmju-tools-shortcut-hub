@@ -10,6 +10,7 @@
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "postinstall": "prisma generate",
     "start": "nest start",
+    "dev": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:prod": "node dist/src/main.js",
     "prisma:generate": "prisma generate",
