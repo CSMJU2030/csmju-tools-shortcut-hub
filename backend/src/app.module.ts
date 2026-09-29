@@ -16,6 +16,7 @@ import { QuickLinksModule } from './quick-links/quick-links.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['.env.local', '.env'],
       load: [configuration],
       validate: validateEnv,
     }),

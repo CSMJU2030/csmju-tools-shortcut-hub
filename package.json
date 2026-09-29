@@ -2,7 +2,7 @@
   "name": "csmju-tools-shortcut-hub",
   "version": "1.0.0",
   "private": true,
-  "description": "CSMJU Student Service - reference implementation ของ CSMJU2030 Subsystem Standard v1.0",
+  "description": "CSMJU Tools Shortcut Hub - ระบบทางลัดเครื่องมือ",
   "scripts": {
     "build": "pnpm --filter backend build",
     "start:dev": "pnpm --filter backend start:dev",

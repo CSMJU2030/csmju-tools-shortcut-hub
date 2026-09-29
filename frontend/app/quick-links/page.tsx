@@ -16,17 +16,8 @@ export default function QuickLinksPage() {
   const [myBookmarks, setMyBookmarks] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
 
-  // ดึงข้อมูล Bookmark จาก LocalStorage
-  useEffect(() => {
-    const savedBookmarks = localStorage.getItem('cs_quicklink_bookmarks');
-    if (savedBookmarks) {
-      try {
-        setMyBookmarks(JSON.parse(savedBookmarks));
-      } catch (e) {
-        console.error('Failed to parse bookmarks', e);
-      }
-    }
-  }, []);
+  // TODO: เปลี่ยนไปใช้ backend แทนการเก็บใน State เมื่อ API เสร็จสมบูรณ์
+  // อ่านจาก State เท่านั้น ไม่มีการใช้ localStorage
 
   // ดึงข้อมูลลิงก์ปักหมุดของสาขา
   useEffect(() => {
@@ -54,7 +45,6 @@ export default function QuickLinksPage() {
       updated = [...myBookmarks, linkId];
     }
     setMyBookmarks(updated);
-    localStorage.setItem('cs_quicklink_bookmarks', JSON.stringify(updated));
   };
 
   return (

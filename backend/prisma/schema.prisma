@@ -71,8 +71,8 @@ model LinkRequest {
   targetYears TargetYear[] @map("target_years")
   tags        String[]
 
-  requestedByUserId   String @map("requested_by_user_id")
-  requestedByUserName String @map("requested_by_user_name")
+  requestedByCoreUserId String @map("requested_by_core_user_id")
+  requestedByUserName   String @map("requested_by_user_name")
   
   status RequestStatus @default(PENDING)
 
@@ -88,7 +88,7 @@ model BrokenLinkReport {
   linkId String @map("link_id")
   link   QuickLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
 
-  reportedByUserId String @map("reported_by_user_id")
+  reportedByCoreUserId String @map("reported_by_core_user_id")
   details          String
 
   isResolved Boolean @default(false) @map("is_resolved")
@@ -102,13 +102,13 @@ model BrokenLinkReport {
 model UserBookmark {
   id String @id @default(uuid())
 
-  userId String @map("user_id")
+  coreUserId String @map("core_user_id")
   
   linkId String @map("link_id")
   link   QuickLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
 
-  @@unique([userId, linkId])
+  @@unique([coreUserId, linkId])
   @@map("user_bookmarks")
 }
