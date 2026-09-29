@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/ibm-plex-sans-thai/400.css";
-import "@fontsource/ibm-plex-sans-thai/500.css";
-import "@fontsource/ibm-plex-sans-thai/600.css";
+import { Plus_Jakarta_Sans, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
-import { CsmjuAppShell } from "../components/layout/csmju-app-shell";
+import { CsmjuAppShell } from "@/csmju";
+
+const displayFont = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const bodyFont = Noto_Sans_Thai({
+  subsets: ["latin", "thai"],
+  variable: "--font-body",
+});
 
 export const metadata: Metadata = {
   title: "รวมเครื่องมือภาควิชาฯ | CSMJU",
@@ -15,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="th" className="h-full antialiased">
+    <html lang="th" className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-body">
         <CsmjuAppShell>{children}</CsmjuAppShell>
       </body>

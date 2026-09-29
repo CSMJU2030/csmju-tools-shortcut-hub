@@ -128,7 +128,7 @@ describeIntegration('Core Hub -> Demo Subsystem integration (spec §37, §38)', 
   });
 
   it('Step 7: a protected business API returns 200 with the same token', async () => {
-    const response = await fetch(`${DEMO_URL}/api/v1/courses`, {
+    const response = await fetch(`${DEMO_URL}/api/v1/quick-links`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
@@ -140,13 +140,13 @@ describeIntegration('Core Hub -> Demo Subsystem integration (spec §37, §38)', 
   });
 
   it('rejects the same request without a token (401)', async () => {
-    const response = await fetch(`${DEMO_URL}/api/v1/courses`);
+    const response = await fetch(`${DEMO_URL}/api/v1/quick-links`);
     expect(response.status).toBe(401);
   });
 
   // ------------------------------------------------------------ central SSO --
   describe('Central SSO + callback_url', () => {
-    const SUBSYSTEM = process.env.SSO_SUBSYSTEM ?? 'student-service';
+    const SUBSYSTEM = process.env.SSO_SUBSYSTEM ?? 'csmju-tools-shortcut-hub';
 
     const authorize = (query: string, token = accessToken) =>
       fetch(`${CORE_HUB_URL}/api/v1/auth/sso/authorize?${query}`, {

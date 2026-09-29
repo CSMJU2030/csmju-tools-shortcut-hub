@@ -9,9 +9,9 @@ process.env.NODE_ENV = 'test';
 // ไม่ใส่ user:password ในโค้ด (กฎ SEC-01) — ชุดนี้ไม่ได้ต่อฐานข้อมูลจริงอยู่แล้ว
 // เพราะ PrismaService ถูกแทนด้วย in-memory double
 process.env.DATABASE_URL =
-  process.env.DATABASE_URL ?? 'postgresql://localhost:5433/demo_student_db_test';
+  process.env.DATABASE_URL ?? 'postgresql://localhost:5433/csmju_tools_shortcut_hub_test';
 process.env.CORE_HUB_ISSUER = 'core-hub';
 process.env.CORE_HUB_AUDIENCE = 'csmju2030';
 process.env.JWKS_CACHE_TTL_MS = '60000';
 process.env.JWKS_MIN_REFRESH_INTERVAL_MS = '1';
-process.env.SUBSYSTEM_ID = 'student-service';
+process.env.SUBSYSTEM_ID = 'csmju-tools-shortcut-hub';

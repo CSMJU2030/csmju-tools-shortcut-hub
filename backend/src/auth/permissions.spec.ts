@@ -5,43 +5,29 @@ describe('Subsystem permission model (spec §15, §16)', () => {
   describe('STUDENT', () => {
     const role = SubsystemRole.STUDENT;
 
-    it('can read its own profile, view courses and enroll itself', () => {
-      expect(can(role, Permission.STUDENT_READ_OWN)).toBe(true);
-      expect(can(role, Permission.COURSE_READ)).toBe(true);
-      expect(can(role, Permission.ENROLLMENT_CREATE_OWN)).toBe(true);
+    it('can read quick links', () => {
+      expect(can(role, Permission.QUICK_LINK_READ_ANY)).toBe(true);
     });
 
-    it('cannot read other students, create courses or manage other enrollments', () => {
-      expect(can(role, Permission.STUDENT_READ_ANY)).toBe(false);
-      expect(can(role, Permission.STUDENT_UPDATE_ANY)).toBe(false);
-      expect(can(role, Permission.STUDENT_CREATE)).toBe(false);
-      expect(can(role, Permission.COURSE_CREATE)).toBe(false);
-      expect(can(role, Permission.ENROLLMENT_CREATE_ANY)).toBe(false);
+    it('cannot manage quick links', () => {
+      expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(false);
     });
   });
 
   describe('ALUMNI', () => {
     it('is read-only', () => {
       const role = SubsystemRole.ALUMNI;
-      expect(can(role, Permission.STUDENT_READ_OWN)).toBe(true);
-      expect(can(role, Permission.COURSE_READ)).toBe(true);
-      expect(can(role, Permission.ENROLLMENT_CREATE_OWN)).toBe(false);
-      expect(can(role, Permission.STUDENT_UPDATE_OWN)).toBe(false);
+      expect(can(role, Permission.QUICK_LINK_READ_ANY)).toBe(true);
+      expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(false);
     });
   });
 
   describe('STAFF', () => {
     const role = SubsystemRole.STAFF;
 
-    it('manages students, courses and enrollments', () => {
-      expect(can(role, Permission.STUDENT_READ_ANY)).toBe(true);
-      expect(can(role, Permission.STUDENT_CREATE)).toBe(true);
-      expect(can(role, Permission.COURSE_CREATE)).toBe(true);
-      expect(can(role, Permission.ENROLLMENT_UPDATE_ANY)).toBe(true);
-    });
-
-    it('cannot delete courses - that stays with ADMIN', () => {
-      expect(can(role, Permission.COURSE_DELETE)).toBe(false);
+    it('can read and manage quick links', () => {
+      expect(can(role, Permission.QUICK_LINK_READ_ANY)).toBe(true);
+      expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(true);
     });
   });
 
@@ -55,10 +41,10 @@ describe('Subsystem permission model (spec §15, §16)', () => {
 
   it('canAny passes when at least one permission matches', () => {
     expect(
-      canAny(SubsystemRole.STUDENT, [Permission.STUDENT_READ_ANY, Permission.STUDENT_READ_OWN]),
+      canAny(SubsystemRole.STUDENT, [Permission.QUICK_LINK_READ_ANY, Permission.QUICK_LINK_MANAGE]),
     ).toBe(true);
     expect(
-      canAny(SubsystemRole.ALUMNI, [Permission.COURSE_CREATE, Permission.COURSE_DELETE]),
+      canAny(SubsystemRole.ALUMNI, [Permission.QUICK_LINK_MANAGE]),
     ).toBe(false);
   });
 
