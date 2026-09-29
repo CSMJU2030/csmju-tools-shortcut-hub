@@ -49,3 +49,16 @@ body {
   background: linear-gradient(90deg, var(--color-primary-container) 0%, var(--color-accent) 100%);
   color: var(--color-on-primary);
 }
+
+/* Typography from Design System */
+@utility text-display { font-size: 40px; font-weight: 700; }
+@utility text-headline-lg { font-size: 32px; font-weight: 700; }
+@utility text-headline-md { font-size: 24px; font-weight: 700; }
+@utility text-title-lg { font-size: 20px; font-weight: 600; }
+@utility text-title-md { font-size: 18px; font-weight: 600; }
+@utility text-body-lg { font-size: 16px; font-weight: 400; }
+@utility text-body-md { font-size: 14px; font-weight: 400; }
+@utility text-body-sm { font-size: 12px; font-weight: 400; }
+@utility text-label-md { font-size: 14px; font-weight: 500; }
+@utility text-label-sm { font-size: 12px; font-weight: 500; }
+@utility text-caption { font-size: 10px; font-weight: 400; }
