@@ -1,16 +1,35 @@
-# csmju-tools-shortcut-hub
+# CSMJU Tools Shortcut Hub
 
-CS Tools Shortcut Hub — ระบบย่อยของโครงการ CSMJU2030
+ระบบรวมลิงก์สำคัญ (Tools Shortcut Hub) สำหรับนักศึกษาคณะวิทยาการคอมพิวเตอร์ มหาวิทยาลัยแม่โจ้ (CSMJU)
 
-มาตรฐานกลางอยู่ใน `standards/` (submodule ของ CSMJU2030/csmju2030-standards)
-สร้างจาก standards v1.0.0
+## การติดตั้งและการรัน (สำหรับนักพัฒนา)
 
-## เริ่มทำงาน
+1. **ติดตั้ง Dependencies:**
+   ```bash
+   pnpm install
+   ```
+2. **สร้างฐานข้อมูลและ Seed ข้อมูลตัวอย่าง:**
+   ```bash
+   pnpm --filter backend prisma:migrate
+   pnpm --filter backend prisma:seed
+   ```
+3. **รันระบบ (ทั้ง Frontend และ Backend):**
+   ```bash
+   pnpm dev:all
+   ```
+   > ระบบ Frontend รันที่พอร์ต `3003` และ Backend API รันที่พอร์ต `3002`
 
-```bash
-git submodule update --init --remote standards/
-pnpm install
-git checkout -b feature/tools-shortcut-hub/<เรื่องที่ทำ>
-```
+## การทดสอบ
 
-ก่อนเปิด PR อ่าน `standards/docs/github-workflow.md` ข้อ 1
+- รัน Unit Test:
+  ```bash
+  pnpm test
+  ```
+- ตรวจสอบมาตรฐานด้วย Conformance:
+  ```bash
+  pnpm conformance
+  ```
+- ตรวจสอบความถูกต้องทั้งหมดก่อนเปิด PR (Lint, Typecheck, Build, Test):
+  ```bash
+  pnpm checks
+  ```
