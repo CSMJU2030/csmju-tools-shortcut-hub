@@ -71,8 +71,8 @@ model LinkRequest {
   targetYears TargetYear[] @map("target_years")
   tags        String[]
 
-  requestedByCoreUserId String @map("requested_by_core_user_id")
-  requestedByUserName   String @map("requested_by_user_name")
+  coreUserId String  @map("core_user_id")
+  personCode String? @map("person_code")
   
   status RequestStatus @default(PENDING)
 

@@ -36,8 +36,8 @@ export interface LinkRequest {
   category: LinkCategory;
   targetYears: TargetYear[];
   tags: string[];
-  requestedByUserId: string;
-  requestedByUserName: string;
+  coreUserId: string;
+  personCode?: string | null;
   status: RequestStatus;
   rejectionReason?: string;
   createdAt: string;
@@ -48,7 +48,7 @@ export interface BrokenLinkReport {
   id: string;
   linkId: string;
   linkTitle: string;
-  reportedByUserId?: string;
+  reportedByCoreUserId?: string;
   details: string;
   isResolved: boolean;
   createdAt: string;

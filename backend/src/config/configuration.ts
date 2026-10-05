@@ -9,6 +9,8 @@ export interface AppConfig {
   subsystemName: string;
   coreHub: {
     url: string;
+    /** Core Hub's web app, where /auth/login and /auth/logout send the browser. */
+    webUrl: string;
     jwksUrl: string;
     issuer: string;
     audience: string;
@@ -34,6 +36,7 @@ export default (): AppConfig => {
     subsystemName: process.env.SUBSYSTEM_NAME ?? 'CS Tools Shortcut Hub',
     coreHub: {
       url: coreHubUrl,
+      webUrl: (process.env.CORE_HUB_WEB_URL ?? coreHubUrl).replace(/\/+$/, ''),
       jwksUrl:
         process.env.CORE_HUB_JWKS_URL ??
         `${coreHubUrl.replace(/\/+$/, '')}/api/v1/.well-known/jwks.json`,

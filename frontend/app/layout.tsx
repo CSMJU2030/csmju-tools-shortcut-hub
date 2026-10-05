@@ -26,8 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   const nav = [
-    { label: "หน้าหลัก", href: "/", icon: "dashboard" as const },
-    { label: "เครื่องมือ", href: "/quick-links", icon: "school" as const },
+    { label: "หน้าหลัก", href: "/quick-links", icon: "dashboard" as const },
+    { label: "ที่บันทึกไว้", href: "/bookmarks", icon: "menu-book" as const },
+    { label: "จัดการลิงก์", href: "/admin/quick-links", icon: "settings" as const },
   ];
 
   return (
@@ -37,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           displayName="CS Tools Shortcut Hub"
           nav={nav}
           user={mockUser}
-          logoutHref="http://localhost:3000/api/v1/auth/logout"
+          coreHubUrl={process.env.CORE_HUB_WEB_URL}
         >
           {children}
         </CsmjuAppShell>

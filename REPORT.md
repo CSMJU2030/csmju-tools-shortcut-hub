@@ -16,6 +16,7 @@
   ✅ PASS  Security & Stack Scan       check-no-jwt-verify.sh
   ✅ PASS  Security & Stack Scan       check-db-isolation.sh
   ✅ PASS  Security & Stack Scan       check-authorized-deps.sh
+  ✅ PASS  Security & Stack Scan       check-backend-nestjs.sh
   ✅ PASS  API Contract Sync           check-openapi-sync.sh
   ✅ PASS  API Contract Sync           check-api-conventions.sh
   ✅ PASS  Data Dictionary Compliance  check-field-aliases.sh
@@ -26,7 +27,7 @@
   ✅ PASS  Code Quality                check-qa.sh
   ✅ PASS  Exception Validation        check-exceptions.sh
 
-✅ All 18 checks passed.
+✅ All 19 checks passed.
 ```
 
 ## 2. ผลการรัน `node standards/conformance/run.js`

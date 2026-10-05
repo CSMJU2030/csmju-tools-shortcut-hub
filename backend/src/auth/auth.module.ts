@@ -3,7 +3,7 @@ import { AuthEventsLogger } from './auth-events.logger';
 import { CoreHubTokenVerifier } from './core-hub-token.verifier';
 import { JwksService } from './jwks.service';
 import { MeController } from './me.controller';
-import { SsoCallbackController } from './sso-callback.controller';
+import { SsoController } from './sso.controller';
 import { CoreHubJwtGuard } from './guards/core-hub-jwt.guard';
 import { PermissionsGuard } from './guards/permissions.guard';
 
@@ -13,7 +13,7 @@ import { PermissionsGuard } from './guards/permissions.guard';
  */
 @Global()
 @Module({
-  controllers: [MeController, SsoCallbackController],
+  controllers: [MeController, SsoController],
   providers: [AuthEventsLogger, JwksService, CoreHubTokenVerifier, CoreHubJwtGuard, PermissionsGuard],
   exports: [AuthEventsLogger, JwksService, CoreHubTokenVerifier, CoreHubJwtGuard, PermissionsGuard],
 })
