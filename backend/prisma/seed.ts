@@ -2,8 +2,17 @@ import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, LinkCategory, TargetYear, RequestStatus } from '../generated/prisma/client';
 
+let connectionString = process.env.DATABASE_URL;
+if (connectionString && connectionString.includes('${')) {
+  const user = process.env.POSTGRES_USER || 'postgres';
+  const password = process.env.POSTGRES_PASSWORD || '';
+  connectionString = connectionString
+    .replace('${POSTGRES_USER}', user)
+    .replace('${POSTGRES_PASSWORD}', password);
+}
+
 const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
+  connectionString,
 });
 
 const prisma = new PrismaClient({ adapter });
