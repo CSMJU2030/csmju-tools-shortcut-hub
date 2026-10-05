@@ -8,7 +8,7 @@ import type { NextConfig } from "next";
  * the same origin as these pages. Same setup as the reference subsystem
  * (CSMJU2030/demo-student-subsystem, frontend/next.config.ts).
  */
-const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:3002";
+const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:4238";
 
 const nextConfig: NextConfig = {
   async rewrites() {

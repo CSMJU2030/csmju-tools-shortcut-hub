@@ -31,7 +31,7 @@ export default (): AppConfig => {
 
   return {
     nodeEnv: process.env.NODE_ENV ?? 'development',
-    port: num(process.env.PORT, 3002),
+    port: num(process.env.PORT, 4238),
     subsystemId: process.env.SUBSYSTEM_ID ?? 'csmju-tools-shortcut-hub',
     subsystemName: process.env.SUBSYSTEM_NAME ?? 'CS Tools Shortcut Hub',
     coreHub: {
