@@ -1,0 +1,114 @@
+// Tools Shortcut Hub - Database Schema
+//
+// Naming follows the CSMJU2030 Subsystem Standard: PostgreSQL tables are plural
+// snake_case and every column is snake_case through @map, while Prisma/TypeScript
+// field names stay camelCase. Application code is therefore unchanged.
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum LinkCategory {
+  ACADEMIC
+  DEV_TOOLS
+  FACULTY_INFO
+  COMMUNITY
+  OTHER
+}
+
+enum TargetYear {
+  ALL
+  YEAR_1
+  YEAR_2
+  YEAR_3
+  YEAR_4
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model QuickLink {
+  id String @id @default(uuid())
+
+  title       String
+  description String?
+  url         String
+  category    LinkCategory @default(OTHER)
+  
+  // Can be multiple target years, stored as array of enums
+  targetYears TargetYear[] @map("target_years")
+  
+  tags        String[]
+  iconName    String?      @map("icon_name")
+  isPinned    Boolean      @default(false) @map("is_pinned")
+  clickCount  Int          @default(0) @map("click_count")
+
+  brokenReports BrokenLinkReport[]
+  bookmarks     UserBookmark[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("quick_links")
+}
+
+model LinkRequest {
+  id String @id @default(uuid())
+
+  title       String
+  description String?
+  url         String
+  category    LinkCategory @default(OTHER)
+  targetYears TargetYear[] @map("target_years")
+  tags        String[]
+
+  requestedByCoreUserId String @map("requested_by_core_user_id")
+  requestedByUserName   String @map("requested_by_user_name")
+  
+  status RequestStatus @default(PENDING)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("link_requests")
+}
+
+model BrokenLinkReport {
+  id String @id @default(uuid())
+
+  linkId String @map("link_id")
+  link   QuickLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
+
+  reportedByCoreUserId String @map("reported_by_core_user_id")
+  details          String
+
+  isResolved Boolean @default(false) @map("is_resolved")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("broken_link_reports")
+}
+
+model UserBookmark {
+  id String @id @default(uuid())
+
+  coreUserId String @map("core_user_id")
+  
+  linkId String @map("link_id")
+  link   QuickLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([coreUserId, linkId])
+  @@map("user_bookmarks")
+}
