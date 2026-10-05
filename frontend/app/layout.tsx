@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           displayName="CS Tools Shortcut Hub"
           nav={nav}
           user={mockUser}
-          logoutHref="http://localhost:3000/api/v1/auth/logout"
+          coreHubUrl={process.env.CORE_HUB_WEB_URL}
         >
           {children}
         </CsmjuAppShell>
