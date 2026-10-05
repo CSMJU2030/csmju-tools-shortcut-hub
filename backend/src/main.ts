@@ -9,10 +9,14 @@ async function bootstrap(): Promise<void> {
   const config = app.get(ConfigService);
 
   // /api/health and /api/v1/... (spec §20-§21).
-  // The central SSO callback stays at the root path, because that is the URL
-  // registered for this subsystem in the Core Hub Subsystem Registry.
+  // The central SSO endpoints (/auth/login, /auth/callback, /auth/logout)
+  // stay at the root path (auth-contract 5).
   app.setGlobalPrefix('api', {
-    exclude: [{ path: 'auth/callback', method: RequestMethod.GET }],
+    exclude: [
+      { path: 'auth/login', method: RequestMethod.GET },
+      { path: 'auth/callback', method: RequestMethod.GET },
+      { path: 'auth/logout', method: RequestMethod.POST },
+    ],
   });
 
   app.useGlobalPipes(
