@@ -13,8 +13,17 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   private readonly logger = new Logger(PrismaService.name);
 
   constructor() {
+    let connectionString = process.env.DATABASE_URL;
+    if (connectionString && connectionString.includes('${')) {
+      const user = process.env.POSTGRES_USER || 'postgres';
+      const password = process.env.POSTGRES_PASSWORD || '';
+      connectionString = connectionString
+        .replace('${POSTGRES_USER}', user)
+        .replace('${POSTGRES_PASSWORD}', password);
+    }
+
     const adapter = new PrismaPg({
-      connectionString: process.env.DATABASE_URL,
+      connectionString,
     });
 
     super({ adapter });
