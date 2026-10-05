@@ -2,11 +2,12 @@
 # schema: standards/schemas/subsystem.schema.json
 
 name: csmju-tools-shortcut-hub          # ต้องตรงกับทะเบียนใน Core Hub และกับ data.service ของ /api/health
-standards_version: "1.0.0"
+standards_version: "1.7.4"
 conformance_level: L3                 # L1 · L2 · L3 (ระบบที่มี UI ต้องถึง L3)
 
 base_url: http://localhost:3002       # URL ของระบบย่อยตอนรันเพื่อทดสอบ
-core_hub_url: http://localhost:3000
+core_hub_url: https://csmju2030.jowave.com
+core_hub_web_url: https://csmju2030.jowave.com
 callback_path: /auth/callback         # ต้องตรงกับ callback_url ที่ลงทะเบียนไว้
 
 public_endpoints:

@@ -12,5 +12,6 @@ export { default as StatusBadge, TONE_STYLES, TONES } from "./StatusBadge";
 export type { StatusTone } from "./StatusBadge";
 export { default as Tabs } from "./Tabs";
 export type { TabItem } from "./Tabs";
+export { default as ReSignIn } from "./ReSignIn";
 export * from "./icons";
 export * from "./ui";

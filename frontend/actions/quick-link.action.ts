@@ -64,3 +64,32 @@ export async function trackLinkClick(linkId: string): Promise<{ success: boolean
     return { success: false };
   }
 }
+
+/**
+ * Server action to create a new quick link.
+ * If unauthorized (401), redirects to /signin-again (auth-contract 7).
+ */
+export async function createQuickLinkAction(formData: FormData) {
+  const { redirect } = await import('next/navigation');
+  const { call } = await import('@/lib/api');
+
+  const title = String(formData.get('title') ?? '').trim();
+  const url = String(formData.get('url') ?? '').trim();
+  const category = String(formData.get('category') ?? 'OTHER');
+
+  const res = await call('/api/v1/quick-links', {
+    method: 'POST',
+    body: { title, url, category },
+  });
+
+  if (!res.ok && res.status === 401) {
+    const page = `/admin/quick-links?${new URLSearchParams({ error: 'การเข้าสู่ระบบหมดอายุ กรุณาเข้าสู่ระบบอีกครั้ง' })}`;
+    redirect(`/signin-again?${new URLSearchParams({ next: page })}`);
+  }
+
+  if (res.ok) {
+    redirect('/admin/quick-links?ok=' + encodeURIComponent('เพิ่มทางลัดสำเร็จ'));
+  } else {
+    redirect(`/admin/quick-links?error=${encodeURIComponent(res.message)}`);
+  }
+}
