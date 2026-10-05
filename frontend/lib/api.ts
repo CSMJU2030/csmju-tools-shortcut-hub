@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { loginHref } from "./sign-in";
 
-const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:3002";
+const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:4238";
 const SUBSYSTEM_ID = process.env.SUBSYSTEM_ID ?? "csmju-tools-shortcut-hub";
 
 /**

@@ -3,7 +3,8 @@
 import { QuickLink, LinkFilterQuery } from '@/types/quick-link.type';
 
 // Base URL for the NestJS backend
-const API_URL = process.env.API_URL || 'http://localhost:3002/api/v1';
+const BACKEND_URL = process.env.BACKEND_URL ?? 'http://127.0.0.1:4238';
+const API_URL = process.env.API_URL || `${BACKEND_URL}/api/v1`;
 
 export async function getQuickLinks(query?: LinkFilterQuery): Promise<QuickLink[]> {
   try {
