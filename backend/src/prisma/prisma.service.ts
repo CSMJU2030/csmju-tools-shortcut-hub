@@ -24,6 +24,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
     const adapter = new PrismaPg({
       connectionString,
+      max: Number(process.env.DATABASE_POOL_MAX) || 5,
     });
 
     super({ adapter });
