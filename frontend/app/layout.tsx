@@ -46,7 +46,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         initials: getInitials(me.email),
         roleLabel: roleLabelMap[me.subsystemRole] || "ผู้ใช้งานทั่วไป",
       }
-    : null;
+    : {
+        initials: "?",
+        roleLabel: "ยังไม่ได้เข้าสู่ระบบ",
+      };
 
   const isStaffOrAdmin = me?.subsystemRole === "ADMIN" || me?.subsystemRole === "STAFF";
 

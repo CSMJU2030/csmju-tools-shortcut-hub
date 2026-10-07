@@ -85,14 +85,13 @@ export default function CsmjuAppShell({
   coreHubUrl?: string;
   /** Optional gradient button under the logo, e.g. { label: "สร้างประกาศใหม่", href: "/news/new" }. */
   primaryAction?: { label: string; href: string };
-  user?: { initials: string; roleLabel: string } | null;
+  user: { initials: string; roleLabel: string };
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
   const [navOpen, setNavOpen] = useState(false);
   const closeNav = () => setNavOpen(false);
   const rootHref = nav[0]?.href ?? "/";
-  const loginUrl = pathname ? `/auth/login?next=${encodeURIComponent(pathname)}` : "/auth/login?next=";
 
   return (
     <div className="flex min-h-dvh w-full bg-background text-on-surface">
@@ -181,26 +180,15 @@ export default function CsmjuAppShell({
           </ul>
         </nav>
 
-        {user ? (
-          <form action={LOGOUT_ACTION} method="post" className="mx-4 mt-4 shrink-0">
-            <button
-              type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/10 py-2.5 text-label-md text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-            >
-              <LogoutIcon className="h-4 w-4" />
-              ออกจากระบบ
-            </button>
-          </form>
-        ) : (
-          <div className="mx-4 mt-4 shrink-0">
-            <a
-              href={loginUrl}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/10 py-2.5 text-label-md text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-            >
-              เข้าสู่ระบบ
-            </a>
-          </div>
-        )}
+        <form action={LOGOUT_ACTION} method="post" className="mx-4 mt-4 shrink-0">
+          <button
+            type="submit"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/10 py-2.5 text-label-md text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+          >
+            <LogoutIcon className="h-4 w-4" />
+            ออกจากระบบ
+          </button>
+        </form>
       </aside>
 
       {/* MAIN */}
@@ -230,37 +218,26 @@ export default function CsmjuAppShell({
             />
           </div>
 
-          {user ? (
-            <div className="flex items-center gap-2 text-on-surface-variant">
-              <button
-                type="button"
-                aria-label="การแจ้งเตือน"
-                className="relative rounded-full p-2 transition-colors hover:bg-surface-variant/50 hover:text-primary-container active:opacity-80"
-              >
-                <NotificationsIcon className="h-6 w-6" />
-              </button>
-              <button
-                type="button"
-                className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-surface-variant/50"
-              >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant/50 bg-primary-container text-label-md text-white shadow-sm">
-                  {user.initials}
-                </span>
-                <span className="hidden text-label-md text-on-surface md:inline">
-                  {user.roleLabel}
-                </span>
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <a
-                href={loginUrl}
-                className="btn-gradient flex items-center justify-center rounded-lg px-4 py-2 text-label-md text-white shadow-sm transition-opacity hover:opacity-90"
-              >
-                เข้าสู่ระบบ
-              </a>
-            </div>
-          )}
+          <div className="flex items-center gap-2 text-on-surface-variant">
+            <button
+              type="button"
+              aria-label="การแจ้งเตือน"
+              className="relative rounded-full p-2 transition-colors hover:bg-surface-variant/50 hover:text-primary-container active:opacity-80"
+            >
+              <NotificationsIcon className="h-6 w-6" />
+            </button>
+            <button
+              type="button"
+              className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-surface-variant/50"
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant/50 bg-primary-container text-label-md text-white shadow-sm">
+                {user.initials}
+              </span>
+              <span className="hidden text-label-md text-on-surface md:inline">
+                {user.roleLabel}
+              </span>
+            </button>
+          </div>
         </header>
 
         <div className="mx-auto w-full max-w-[1280px] flex-1 space-y-8 p-4 md:p-12">

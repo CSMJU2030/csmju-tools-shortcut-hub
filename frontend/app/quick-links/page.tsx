@@ -15,9 +15,14 @@ export default function QuickLinksPage() {
   const [selectedYear, setSelectedYear] = useState<TargetYear>('ALL');
   const [myBookmarks, setMyBookmarks] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
-  // TODO: เปลี่ยนไปใช้ backend แทนการเก็บใน State เมื่อ API เสร็จสมบูรณ์
-  // อ่านจาก State เท่านั้น ไม่มีการใช้ localStorage
+  // ตรวจสอบสถานะการเข้าสู่ระบบ
+  useEffect(() => {
+    fetch('/api/v1/me')
+      .then((res) => setIsLoggedIn(res.ok))
+      .catch(() => setIsLoggedIn(false));
+  }, []);
 
   // ดึงข้อมูลลิงก์ปักหมุดของสาขา
   useEffect(() => {
@@ -65,6 +70,33 @@ export default function QuickLinksPage() {
             </p>
           </div>
         </header>
+        
+        {/* แถบเข้าสู่ระบบสำหรับผู้เยี่ยมชม */}
+        {isLoggedIn === false && (
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-xl border border-outline-variant/40 bg-surface-container-lowest shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary-container/10 text-primary-container flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-title-sm font-semibold text-on-surface">
+                  เข้าสู่ระบบด้วย CSMJU Core Hub
+                </p>
+                <p className="text-body-sm text-outline">
+                  เข้าสู่ระบบเพื่อบันทึกรายการทางลัดส่วนตัว และเข้าถึงสิทธิ์การใช้งานตามบทบาทของคุณ
+                </p>
+              </div>
+            </div>
+            <a
+              href="/auth/login?next=/quick-links"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg btn-gradient text-white text-label-md shadow-md shrink-0 transition-opacity hover:opacity-90"
+            >
+              เข้าสู่ระบบ
+            </a>
+          </div>
+        )}
 
         {/* ค้นหาและตัวกรอง */}
         <section className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
