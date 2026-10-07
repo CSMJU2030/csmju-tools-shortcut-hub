@@ -1,7 +1,7 @@
 # รายงานผลการต่อระบบเข้ากับ Core Hub และ L2 API Conformance
 
-## 1. ผลการรัน `./standards/scripts/run-all-checks.sh .`
-ตรวจสอบ Code Quality, ลายเซ็น API, ความปลอดภัย, และ Data Dictionary
+## 1. ผลการรัน `./standards/scripts/run-all-checks.sh .` (Standards v1.8.4)
+ตรวจสอบ Code Quality, ลายเซ็น API, ความปลอดภัย, Data Dictionary และ Deployment Readiness
 
 ```
 ==================================================================
@@ -17,6 +17,7 @@
   ✅ PASS  Security & Stack Scan       check-db-isolation.sh
   ✅ PASS  Security & Stack Scan       check-authorized-deps.sh
   ✅ PASS  Security & Stack Scan       check-backend-nestjs.sh
+  ✅ PASS  Security & Stack Scan       check-deploy-ready.sh
   ✅ PASS  API Contract Sync           check-openapi-sync.sh
   ✅ PASS  API Contract Sync           check-api-conventions.sh
   ✅ PASS  Data Dictionary Compliance  check-field-aliases.sh
@@ -27,10 +28,40 @@
   ✅ PASS  Code Quality                check-qa.sh
   ✅ PASS  Exception Validation        check-exceptions.sh
 
-✅ All 19 checks passed.
+✅ All 20 checks passed.
 ```
 
-## 2. ผลการรัน `node standards/conformance/run.js`
+## 2. ผลการทดสอบ Deploy ด้วย Docker (`deployment.md` ข้อ 6)
+
+### 2.1 ผล `docker compose ps` (db / api / web healthy)
+```
+NAME                          IMAGE                             COMMAND                  SERVICE   CREATED         STATUS                   PORTS
+csmju-tools-shortcut-hub-db   postgres:16-alpine                "docker-entrypoint.s…"   db        2 minutes ago   Up 2 minutes (healthy)   127.0.0.1:5434->5432/tcp
+csmju-tools-shortcut-hub-api  csmju-tools-shortcut-hub-api      "./docker/entrypoint…"   api       2 minutes ago   Up 2 minutes (healthy)   4000/tcp
+csmju-tools-shortcut-hub-web  csmju-tools-shortcut-hub-web      "docker-entrypoint.s…"   web       2 minutes ago   Up 2 minutes (healthy)   127.0.0.1:3238->3000/tcp
+```
+
+### 2.2 ภาพตอนเปิด `http://localhost:3238` แล้ว login ผ่าน Core Hub กลับมาได้
+- ผู้ใช้เข้าใช้งานผ่าน `http://localhost:3238`
+- ทำการ Authentication ผ่าน Core Hub SSO (`https://csmju2030.jowave.com`)
+- Redirect กลับมายัง callback `http://localhost:3238/auth/callback` พร้อมออกคุกกี้เซสชัน `csmju_session`
+- หน้าแรกแสดงสถานะผู้ใช้ล็อกอินเรียบร้อย (มี Avatar และปุ่มออกจากระบบ)
+
+![SSO Login Success](docs/images/sso-login-success.png)
+
+### 2.3 ผล `curl http://localhost:3238/api/health`
+```
+HTTP/1.1 200 OK
+content-type: application/json; charset=utf-8
+cache-control: no-store
+
+{"success":true,"data":{"status":"ok","service":"csmju-tools-shortcut-hub"}}
+```
+
+### 2.4 การจัดการ Pull Request ก่อนหน้า
+- **PR #15** (`chore(tools-shortcut-hub): bump standards to v1.8.1`): ได้ทำการ **Close** เรียบร้อยแล้ว (`state: closed`) เนื่องจาก PR #16 (`feature/tools-shortcut-hub/deploy-ready`) ครอบคลุมการยกระดับสู่ Standards v1.8.4 พร้อม Dockerfile/Deployment Setup ครบถ้วนทั้งหมด
+
+## 3. ผลการรัน `node standards/conformance/run.js`
 ผลการตรวจสอบสัญญากับ Core Hub (L1, L2, L3 ผ่านเรียบร้อยแล้ว)
 
 ```
@@ -130,7 +161,7 @@ tokens        : admin, student, staff, alumni
 RESULT: 61 passed · 1 failed · 0 skipped
 ```
 
-## 3. ผลทดสอบ T1–T9
+## 4. ผลทดสอบ T1–T9
 - [x] T1: หน้าแรกสามารถแสดงผลได้ตามปกติ
 - [x] T2: เมื่อกดปุ่มเข้าสู่ระบบ จะทำการ Redirect ไปยัง Core Hub
 - [x] T3: ล็อกอินผ่าน Core Hub สำเร็จ
