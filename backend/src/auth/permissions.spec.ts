@@ -24,6 +24,19 @@ describe('Subsystem permission model (spec §15, §16)', () => {
     });
   });
 
+  describe('LECTURER', () => {
+    const role = SubsystemRole.LECTURER;
+
+    it('can read quick links', () => {
+      expect(can(role, Permission.QUICK_LINK_READ_ANY)).toBe(true);
+    });
+
+    it('cannot manage or delete quick links', () => {
+      expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(false);
+      expect(can(role, Permission.QUICK_LINK_DELETE)).toBe(false);
+    });
+  });
+
   describe('STAFF', () => {
     const role = SubsystemRole.STAFF;
 

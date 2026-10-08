@@ -28,6 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const roleLabelMap: Record<string, string> = {
     ADMIN: "ผู้ดูแลระบบ",
     STAFF: "เจ้าหน้าที่",
+    LECTURER: "อาจารย์",
     STUDENT: "นักศึกษา",
     ALUMNI: "ศิษย์เก่า",
   };

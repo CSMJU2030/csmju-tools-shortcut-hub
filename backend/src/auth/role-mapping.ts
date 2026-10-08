@@ -8,7 +8,7 @@ import { SubsystemRole } from './core-hub-identity';
  *   student            STUDENT
  *   alumni             ALUMNI
  *   staff              STAFF
- *   lecturer           STAFF
+ *   lecturer           LECTURER
  *   admin              ADMIN
  *
  * `guest` is intentionally unmapped (returns null), which results in HTTP 403 Forbidden
@@ -18,7 +18,7 @@ export const CORE_ROLE_TO_SUBSYSTEM_ROLE: Readonly<Record<string, SubsystemRole>
   student: SubsystemRole.STUDENT,
   alumni: SubsystemRole.ALUMNI,
   staff: SubsystemRole.STAFF,
-  lecturer: SubsystemRole.STAFF,
+  lecturer: SubsystemRole.LECTURER,
   admin: SubsystemRole.ADMIN,
 });
 

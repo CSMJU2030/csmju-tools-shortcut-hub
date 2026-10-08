@@ -6,7 +6,7 @@ describe('Core role -> subsystem role mapping (spec §14, authorization.md, G0 #
     ['student', SubsystemRole.STUDENT],
     ['alumni', SubsystemRole.ALUMNI],
     ['staff', SubsystemRole.STAFF],
-    ['lecturer', SubsystemRole.STAFF],
+    ['lecturer', SubsystemRole.LECTURER],
     ['admin', SubsystemRole.ADMIN],
   ])('maps core role "%s" to %s', (coreRole, expected) => {
     expect(mapCoreRoleToSubsystemRole(coreRole)).toBe(expected);
@@ -14,7 +14,7 @@ describe('Core role -> subsystem role mapping (spec §14, authorization.md, G0 #
 
   it('is case and whitespace tolerant', () => {
     expect(mapCoreRoleToSubsystemRole('  STAFF ')).toBe(SubsystemRole.STAFF);
-    expect(mapCoreRoleToSubsystemRole('  LECTURER ')).toBe(SubsystemRole.STAFF);
+    expect(mapCoreRoleToSubsystemRole('  LECTURER ')).toBe(SubsystemRole.LECTURER);
   });
 
   it('does not map guest (returns null for 403 Forbidden as agreed in G0 #7)', () => {

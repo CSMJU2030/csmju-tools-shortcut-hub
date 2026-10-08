@@ -22,7 +22,7 @@ export type Me = {
   id: string;
   email: string;
   coreRole: string;
-  subsystemRole: "STUDENT" | "ALUMNI" | "STAFF" | "ADMIN";
+  subsystemRole: "STUDENT" | "ALUMNI" | "STAFF" | "LECTURER" | "ADMIN";
   session: { expiresAt: string | null };
 };
 

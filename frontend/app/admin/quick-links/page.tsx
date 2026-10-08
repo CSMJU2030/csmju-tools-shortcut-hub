@@ -29,7 +29,7 @@ export default async function AdminQuickLinksPage() {
             </div>
             <h1 className="text-headline-md font-bold text-error">403 — ไม่มีสิทธิ์เข้าถึง</h1>
             <p className="text-body-md text-on-surface-variant max-w-md mx-auto">
-              หน้านี้สงวนไว้สำหรับอาจารย์ (Lecturer) และเจ้าหน้าที่ (Staff/Admin) เท่านั้น บัญชีของคุณมีบทบาทเป็น {me?.coreRole}
+              หน้านี้สงวนไว้สำหรับเจ้าหน้าที่ (Staff) และผู้ดูแลระบบ (Admin) เท่านั้น บัญชีของคุณมีบทบาทเป็น {me?.coreRole}
             </p>
             <div className="pt-2">
               <Link
