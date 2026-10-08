@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { CsmjuAppShell } from "@/csmju";
+import { getMe } from "@/lib/api";
 
 const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -18,17 +19,46 @@ export const metadata: Metadata = {
   description: "ศูนย์รวมทางลัดระบบ เว็บไซต์ และเครื่องมือสำคัญประจำสาขาวิทยาการคอมพิวเตอร์",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // TODO: Replace with real user data from Core Hub when auth is implemented
-  const mockUser = {
-    initials: "U",
-    roleLabel: "ผู้ใช้งานทั่วไป",
+export const dynamic = "force-dynamic";
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const meResult = await getMe();
+  const me = meResult.ok ? meResult.data : null;
+
+  const roleLabelMap: Record<string, string> = {
+    ADMIN: "ผู้ดูแลระบบ",
+    STAFF: "เจ้าหน้าที่",
+    STUDENT: "นักศึกษา",
+    ALUMNI: "ศิษย์เก่า",
   };
+
+  const getInitials = (email: string) => {
+    if (!email) return "U";
+    const namePart = email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "");
+    if (namePart.length >= 2) {
+      return namePart.slice(0, 2).toUpperCase();
+    }
+    return (namePart[0] || "U").toUpperCase();
+  };
+
+  const user = me
+    ? {
+        initials: getInitials(me.email),
+        roleLabel: roleLabelMap[me.subsystemRole] || "ผู้ใช้งานทั่วไป",
+      }
+    : {
+        initials: "?",
+        roleLabel: "ยังไม่ได้เข้าสู่ระบบ",
+      };
+
+  const isStaffOrAdmin = me?.subsystemRole === "ADMIN" || me?.subsystemRole === "STAFF";
 
   const nav = [
     { label: "หน้าหลัก", href: "/quick-links", icon: "dashboard" as const },
     { label: "ที่บันทึกไว้", href: "/bookmarks", icon: "menu-book" as const },
-    { label: "จัดการลิงก์", href: "/admin/quick-links", icon: "settings" as const },
+    ...(isStaffOrAdmin
+      ? [{ label: "จัดการลิงก์", href: "/admin/quick-links", icon: "settings" as const }]
+      : []),
   ];
 
   return (
@@ -37,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CsmjuAppShell
           displayName="CS Tools Shortcut Hub"
           nav={nav}
-          user={mockUser}
+          user={user}
           coreHubUrl={process.env.CORE_HUB_WEB_URL}
         >
           {children}
