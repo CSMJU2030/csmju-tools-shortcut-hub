@@ -18,7 +18,9 @@ const ALUMNI_PERMISSIONS: Permission[] = [
 const STAFF_PERMISSIONS: Permission[] = [
   Permission.QUICK_LINK_READ_ANY,
   Permission.QUICK_LINK_MANAGE,
+  Permission.QUICK_LINK_DELETE,
 ];
+
 
 const ADMIN_PERMISSIONS: Permission[] = Object.values(Permission);
 
