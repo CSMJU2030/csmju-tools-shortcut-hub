@@ -15,6 +15,10 @@ const ALUMNI_PERMISSIONS: Permission[] = [
   Permission.QUICK_LINK_READ_ANY,
 ];
 
+const LECTURER_PERMISSIONS: Permission[] = [
+  Permission.QUICK_LINK_READ_ANY,
+];
+
 const STAFF_PERMISSIONS: Permission[] = [
   Permission.QUICK_LINK_READ_ANY,
   Permission.QUICK_LINK_MANAGE,
@@ -28,6 +32,7 @@ export const ROLE_PERMISSIONS: Readonly<Record<SubsystemRole, readonly Permissio
   Object.freeze({
     [SubsystemRole.STUDENT]: Object.freeze(STUDENT_PERMISSIONS),
     [SubsystemRole.ALUMNI]: Object.freeze(ALUMNI_PERMISSIONS),
+    [SubsystemRole.LECTURER]: Object.freeze(LECTURER_PERMISSIONS),
     [SubsystemRole.STAFF]: Object.freeze(STAFF_PERMISSIONS),
     [SubsystemRole.ADMIN]: Object.freeze(ADMIN_PERMISSIONS),
   });

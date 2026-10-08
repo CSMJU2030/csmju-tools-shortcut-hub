@@ -3,6 +3,7 @@ export enum SubsystemRole {
   STUDENT = 'STUDENT',
   ALUMNI = 'ALUMNI',
   STAFF = 'STAFF',
+  LECTURER = 'LECTURER',
   ADMIN = 'ADMIN',
 }
 
