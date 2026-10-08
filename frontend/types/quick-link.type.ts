@@ -60,3 +60,18 @@ export interface LinkFilterQuery {
   category?: LinkCategory | 'ALL';
   targetYear?: TargetYear;
 }
+
+// Input สำหรับสร้างทางลัดใหม่
+export interface CreateQuickLinkInput {
+  title: string;
+  description?: string;
+  url: string;
+  category?: LinkCategory;
+  targetYears?: TargetYear[];
+  tags?: string[];
+  iconName?: string;
+  isPinned?: boolean;
+}
+
+// Input สำหรับแก้ไขทางลัด
+export type UpdateQuickLinkInput = Partial<CreateQuickLinkInput>;
