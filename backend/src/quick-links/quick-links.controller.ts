@@ -42,10 +42,11 @@ export class QuickLinksController {
   }
 
   @Delete(':id')
-  @RequirePermissions(Permission.QUICK_LINK_MANAGE)
+  @RequirePermissions(Permission.QUICK_LINK_DELETE)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.quickLinksService.remove(id);
   }
+
 
   @Post(':id/click')
   trackClick(@Param('id', ParseUUIDPipe) id: string) {
