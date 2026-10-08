@@ -1,5 +1,7 @@
 import { getMe, isUnauthorized } from "@/lib/api";
 import { ReSignIn, PageHeader } from "@/csmju";
+import { getQuickLinks } from "@/actions/quick-link.action";
+import { AdminQuickLinksClient } from "./admin-quick-links-client";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -43,6 +45,9 @@ export default async function AdminQuickLinksPage() {
     );
   }
 
+  // Load initial quick links for admin view
+  const initialLinks = await getQuickLinks({ limit: 100 });
+
   return (
     <div className="min-h-screen bg-background text-on-surface py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -51,28 +56,15 @@ export default async function AdminQuickLinksPage() {
           description={`ผู้ดูแลระบบ: ${me?.email} (Role: ${me?.subsystemRole})`}
         />
 
-        <div className="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-8 shadow-sm space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h2 className="text-title-lg font-bold text-on-surface">รายการลิงก์ในระบบ</h2>
-              <p className="text-body-sm text-outline">จัดการ แก้ไข และปักหมุดลิงก์เครื่องมือของภาควิชา</p>
-            </div>
-            <button
-              type="button"
-              className="px-4 py-2.5 rounded-lg btn-gradient text-white text-label-md shadow-md inline-flex items-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              เพิ่มลิงก์ใหม่
-            </button>
-          </div>
-
-          <div className="rounded-lg border border-outline-variant/30 p-6 text-center text-outline">
-            อยู่ระหว่างดึงข้อมูลรายการทางลัดสำหรับผู้ดูแลระบบ
-          </div>
-        </div>
+        <AdminQuickLinksClient
+          initialLinks={initialLinks}
+          currentUser={{
+            email: me?.email ?? '',
+            subsystemRole: me?.subsystemRole ?? '',
+          }}
+        />
       </div>
     </div>
   );
 }
+

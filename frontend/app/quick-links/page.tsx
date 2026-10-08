@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
+import Link from 'next/link';
 import { QuickLink, LinkCategory, TargetYear } from '@/types/quick-link.type';
 import { getQuickLinks, getPinnedQuickLinks } from '@/actions/quick-link.action';
 import { SearchBar } from '@/components/quick-link/search-bar';
@@ -16,11 +17,20 @@ export default function QuickLinksPage() {
   const [myBookmarks, setMyBookmarks] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [isStaffOrAdmin, setIsStaffOrAdmin] = useState(false);
 
-  // ตรวจสอบสถานะการเข้าสู่ระบบ
+  // ตรวจสอบสถานะการเข้าสู่ระบบและสิทธิ์
   useEffect(() => {
     fetch('/api/v1/me')
-      .then((res) => setIsLoggedIn(res.ok))
+      .then(async (res) => {
+        setIsLoggedIn(res.ok);
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.data?.subsystemRole === 'STAFF' || json?.data?.subsystemRole === 'ADMIN') {
+            setIsStaffOrAdmin(true);
+          }
+        }
+      })
       .catch(() => setIsLoggedIn(false));
   }, []);
 
@@ -57,7 +67,7 @@ export default function QuickLinksPage() {
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Header ส่วนหัวระบบ */}
-        <header className="brand-gradient text-on-primary rounded-xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+        <header className="brand-gradient text-on-primary rounded-xl p-6 sm:p-10 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
           <div className="relative z-10 max-w-2xl">
             <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm text-label-sm rounded-full mb-3 text-primary-fixed">
               CSMJU 2030 Directory Portal
@@ -69,7 +79,21 @@ export default function QuickLinksPage() {
               ศูนย์รวมทางลัดระบบ เว็บไซต์ และเครื่องมือสำคัญประจำสาขาวิทยาการคอมพิวเตอร์
             </p>
           </div>
+          {isStaffOrAdmin && (
+            <div className="relative z-10 shrink-0">
+              <Link
+                href="/admin/quick-links"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-label-md transition-colors shadow-sm"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                <span>เพิ่ม / จัดการทางลัด</span>
+              </Link>
+            </div>
+          )}
         </header>
+
         
         {/* แถบเข้าสู่ระบบสำหรับผู้เยี่ยมชม */}
         {isLoggedIn === false && (
