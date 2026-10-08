@@ -74,4 +74,4 @@ export interface CreateQuickLinkInput {
 }
 
 // Input สำหรับแก้ไขทางลัด
-export type UpdateQuickLinkInput = Partial<CreateQuickLinkInput>;
+export type UpdateQuickLinkInput = Partial<CreateQuickLinkInput>;

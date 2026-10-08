@@ -3,7 +3,9 @@ import { SubsystemRole } from './core-hub-identity';
 export enum Permission {
   QUICK_LINK_READ_ANY = 'quick-link:read:any',
   QUICK_LINK_MANAGE = 'quick-link:manage',
+  QUICK_LINK_DELETE = 'quick-link:delete',
 }
+
 
 const STUDENT_PERMISSIONS: Permission[] = [
   Permission.QUICK_LINK_READ_ANY,

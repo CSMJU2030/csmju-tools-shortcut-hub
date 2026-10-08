@@ -9,8 +9,9 @@ describe('Subsystem permission model (spec §15, §16)', () => {
       expect(can(role, Permission.QUICK_LINK_READ_ANY)).toBe(true);
     });
 
-    it('cannot manage quick links', () => {
+    it('cannot manage or delete quick links', () => {
       expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(false);
+      expect(can(role, Permission.QUICK_LINK_DELETE)).toBe(false);
     });
   });
 
@@ -19,6 +20,7 @@ describe('Subsystem permission model (spec §15, §16)', () => {
       const role = SubsystemRole.ALUMNI;
       expect(can(role, Permission.QUICK_LINK_READ_ANY)).toBe(true);
       expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(false);
+      expect(can(role, Permission.QUICK_LINK_DELETE)).toBe(false);
     });
   });
 
@@ -29,7 +31,12 @@ describe('Subsystem permission model (spec §15, §16)', () => {
       expect(can(role, Permission.QUICK_LINK_READ_ANY)).toBe(true);
       expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(true);
     });
+
+    it('cannot delete quick links (admin only)', () => {
+      expect(can(role, Permission.QUICK_LINK_DELETE)).toBe(false);
+    });
   });
+
 
   describe('ADMIN', () => {
     it('holds every permission', () => {

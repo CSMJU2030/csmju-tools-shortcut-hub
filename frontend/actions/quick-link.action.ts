@@ -145,6 +145,12 @@ export async function updateQuickLinkAction(
 export async function deleteQuickLinkAction(
   id: string,
 ): Promise<{ ok: boolean; message?: string }> {
+  const { getMe } = await import('@/lib/api');
+  const me = await getMe();
+  if (!me.ok || me.data.subsystemRole !== 'ADMIN') {
+    return { ok: false, message: 'สิทธิ์ไม่เพียงพอ: เฉพาะผู้ดูแลระบบ (ADMIN) เท่านั้นที่สามารถลบรายการทางลัดได้' };
+  }
+
   const res = await call<{ id: string }>(`/api/v1/quick-links/${id}`, {
     method: 'DELETE',
   });
@@ -158,6 +164,7 @@ export async function deleteQuickLinkAction(
   return { ok: false, message: res.message };
 }
 
+
 /**
  * Server action to toggle pinned status of a quick link.
  */
@@ -167,4 +174,3 @@ export async function togglePinQuickLinkAction(
 ): Promise<{ ok: boolean; message?: string }> {
   return updateQuickLinkAction(id, { isPinned });
 }
-
