@@ -147,9 +147,11 @@ export async function deleteQuickLinkAction(
 ): Promise<{ ok: boolean; message?: string }> {
   const { getMe } = await import('@/lib/api');
   const me = await getMe();
-  if (!me.ok || me.data.subsystemRole !== 'ADMIN') {
-    return { ok: false, message: 'สิทธิ์ไม่เพียงพอ: เฉพาะผู้ดูแลระบบ (ADMIN) เท่านั้นที่สามารถลบรายการทางลัดได้' };
+  const isStaffOrAdmin = me.ok && (me.data.subsystemRole === 'ADMIN' || me.data.subsystemRole === 'STAFF');
+  if (!isStaffOrAdmin) {
+    return { ok: false, message: 'สิทธิ์ไม่เพียงพอ: เฉพาะเจ้าหน้าที่หรือผู้ดูแลระบบเท่านั้นที่สามารถลบรายการทางลัดได้' };
   }
+
 
   const res = await call<{ id: string }>(`/api/v1/quick-links/${id}`, {
     method: 'DELETE',

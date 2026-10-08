@@ -32,10 +32,11 @@ describe('Subsystem permission model (spec §15, §16)', () => {
       expect(can(role, Permission.QUICK_LINK_MANAGE)).toBe(true);
     });
 
-    it('cannot delete quick links (admin only)', () => {
-      expect(can(role, Permission.QUICK_LINK_DELETE)).toBe(false);
+    it('can delete quick links', () => {
+      expect(can(role, Permission.QUICK_LINK_DELETE)).toBe(true);
     });
   });
+
 
 
   describe('ADMIN', () => {
